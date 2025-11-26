@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 counter: _allahuAkbarCounter,
                 onPressed: _incrementAllahuAkbar,
               ),
-              const SizedBox(height:10)// إضافة مسافة سفلية لتجنب تداخل المحتوى مع الزر العائم
+              const SizedBox(height:10)
             ],
           ),
         ),
