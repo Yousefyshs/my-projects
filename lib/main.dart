@@ -1,348 +1,176 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ProfileApp());
+  runApp(const MyApp());
 }
 
-class ProfileApp extends StatefulWidget {
-  @override
-  _ProfileAppState createState() => _ProfileAppState();
-}
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-class _ProfileAppState extends State<ProfileApp> {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // لإخفاء شريط "Debug"
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text(
-            'CV',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+        title: 'المسبحة الإلكترونية',
+        theme: ThemeData(
+
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+          useMaterial3: true,
+
         ),
-        body: SingleChildScrollView(
-          // استخدام التمرير لحل مشكلة تجاوز الشاشة
+        home: const  MyHomePage(title: "المسبحة الإلكترونية")
+
+
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _subhanAllahCounter = 0;
+  int _alhamdulillahCounter = 0;
+  int _allahuAkbarCounter = 0;
+
+
+  void _incrementSubhanAllah() {
+    setState(() {
+      if (_subhanAllahCounter >= 33) {
+        _subhanAllahCounter = 0;
+      } else {
+        _subhanAllahCounter++;
+      }
+    });
+  }
+  void _incrementAlhamdulillah() {
+    setState(() {
+      if (_alhamdulillahCounter >= 33) {
+        _alhamdulillahCounter = 0;
+      } else {
+        _alhamdulillahCounter++;
+      }
+    });
+  }
+
+  void _incrementAllahuAkbar() {
+    setState(() {
+      if (_allahuAkbarCounter >= 33) {
+        _allahuAkbarCounter = 0;
+      } else {
+        _allahuAkbarCounter++;
+      }
+    });
+  }
+
+  void _resetAllCounters() {
+    setState(() {
+      _subhanAllahCounter = 0;
+      _alhamdulillahCounter = 0;
+      _allahuAkbarCounter = 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+
+        title: const Text("المسبحة الإلكترونية"),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+
+        child:Padding(
+
+
+
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // --- القسم العلوي (البنر) ---
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/Untitled-2.jpg'),
-                    fit: BoxFit.cover,
-                    // إضافة فلتر لجعل الصورة أغمق قليلاً ليبرز النص
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.4), BlendMode.darken),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('images/yshs.jpg'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                          )),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('yousef',
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          Text(' subih',
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  color: Colors.orangeAccent,
-                                  fontWeight: FontWeight.bold))
-                        ]),
-                    Text(
-                      'Software Developer',
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
-                    ),
-                  ],
-                ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+
+
+
+              const SizedBox(height: 5), // إضافة مسافة علوية لتحسين التوسيط البصري عند التمرير
+              _buildTasbihCard(
+                title: "سبحان الله",
+                counter: _subhanAllahCounter,
+                onPressed: _incrementSubhanAllah,
               ),
-
-              // --- قسم المعلومات الشخصية ---
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Personal Information",
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-
-                    // -- الصف الأول: الاسم --
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center, // محاذاة أفضل
-                        children: [
-                          Icon(Icons.person, color: Colors.black54, size: 20),
-                          SizedBox(width: 8), // مسافة أفضل
-                          Text("Name:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "Yousef Saleh Hmeid Subeih",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // -- الصف الثاني: الإيميل --
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.email, color: Colors.black54, size: 20),
-                          SizedBox(width: 8),
-                          Text("Gmail:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "ysubih75@gmail.com",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // -- الصف الثالث: الهاتف --
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.phone, color: Colors.black54, size: 20),
-                          SizedBox(width: 8),
-                          Text("Phone:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "+967 770 523 557",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // -- الصف الرابع: مكان الميلاد --
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.home, color: Colors.black54, size: 20),
-                          SizedBox(width: 8),
-                          Text("Place of birth:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "Yemen - Hadramaut - Tarim",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 10),
+              _buildTasbihCard(
+                title: " الحمد لله كثيرا",
+                counter: _alhamdulillahCounter,
+                onPressed: _incrementAlhamdulillah,
               ),
+              const SizedBox(height: 10),ColoredBox(color: Colors.green),
+              _buildTasbihCard(
 
-
-              Divider(
-                thickness: 1,
-                color: Colors.grey[300],
-                indent: 16,
-                endIndent: 16,
+                title: "الله أكبر",
+                counter: _allahuAkbarCounter,
+                onPressed: _incrementAllahuAkbar,
               ),
-
-              // --- قسم التعليم ---
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Education",
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.school, color: Colors.black54, size: 20),
-                          SizedBox(width: 8),
-                          Text("Degree:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "Bachelor of Computer Science",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.location_city, color: Colors.black54, size: 20),
-                          SizedBox(width: 8),
-                          Text("University:",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              "Seiyun University",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // --- بداية قسم المهارات (Skills) ---
-              Divider(
-                thickness: 1,
-                color: Colors.grey[300],
-                indent: 16,
-                endIndent: 16,
-              ),
-
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Skills",
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 12),
-
-                    // -- مهارة Flutter --
-
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Organization", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                          SizedBox(height: 4),
-                          LinearProgressIndicator(
-                            value: 0.8, // 80%
-                            backgroundColor: Colors.grey[300],
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-                          ),
-                        ],
-                      ),
-                    ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Flutter & Dart", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                          SizedBox(height: 4),
-                          LinearProgressIndicator(
-                            value: 0.5,
-                            backgroundColor: Colors.grey[300],
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // -- مهارة UI Design --
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("UI Design", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                          SizedBox(height: 4),
-                          LinearProgressIndicator(
-                            value: 0.4, // 60%
-                            backgroundColor: Colors.grey[300],
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
+              const SizedBox(height:10)// إضافة مسافة سفلية لتجنب تداخل المحتوى مع الزر العائم
             ],
           ),
         ),
       ),
+
+
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: _resetAllCounters,
+        tooltip: 'تصفير الكل',
+        child: const Icon(Icons.refresh),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  Widget _buildTasbihCard({required String title, required int counter, required VoidCallback onPressed}) {
+    return Card(
+
+
+      elevation: 4.0,
+      child: Padding(
+
+
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        child: Column(
+
+          children: [
+
+            Text(
+              title,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87 ),
+            ),
+            const SizedBox(height: 5),
+
+            ElevatedButton(
+              onPressed: onPressed,
+
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 60 ),
+
+                textStyle: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              child: Text('$counter'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
