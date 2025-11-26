@@ -26,9 +26,9 @@ class _ProfileAppState extends State<ProfileApp> {
         body: SingleChildScrollView(
           // استخدام التمرير لحل مشكلة تجاوز الشاشة
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // لمحاذاة العناوين لليسار
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // القسم العلوي (البنر)
+              // --- القسم العلوي (البنر) ---
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(20),
@@ -51,7 +51,7 @@ class _ProfileAppState extends State<ProfileApp> {
                           image: DecorationImage(
                             image: AssetImage('images/yshs.jpg'),
                             fit: BoxFit.cover,
-                            alignment: Alignment.topCenter, // جرب تغيير هذه لتركيز الوجه
+                            alignment: Alignment.topCenter,
                           )),
                     ),
                     SizedBox(height: 10),
@@ -77,7 +77,7 @@ class _ProfileAppState extends State<ProfileApp> {
                 ),
               ),
 
-              //  قسم المعلومات الشخصية
+              // --- قسم المعلومات الشخصية ---
               Padding(
                 padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -194,9 +194,9 @@ class _ProfileAppState extends State<ProfileApp> {
                 ),
               ),
 
-              // --- الفاصل ---
+
               Divider(
-                thickness: 1, // سمك أقل
+                thickness: 1,
                 color: Colors.grey[300],
                 indent: 16,
                 endIndent: 16,
@@ -282,16 +282,16 @@ class _ProfileAppState extends State<ProfileApp> {
                             fontSize: 22,
                             color: Colors.blue,
                             fontWeight: FontWeight.bold)),
-                    SizedBox(height: 12), // مسافة أكبر قبل أول مهارة
+                    SizedBox(height: 12),
 
                     // -- مهارة Flutter --
-                    // يمكنك نسخ هذا الجزء وتكراره لكل مهارة
+
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(" Organization and leadership", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          Text("Organization", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                           SizedBox(height: 4),
                           LinearProgressIndicator(
                             value: 0.8, // 80%
@@ -302,7 +302,7 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
 
-                    // -- مهارة Firebase --
+
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Column(
@@ -311,7 +311,7 @@ class _ProfileAppState extends State<ProfileApp> {
                           Text("Flutter & Dart", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                           SizedBox(height: 4),
                           LinearProgressIndicator(
-                            value: 0.4, // 70%
+                            value: 0.5,
                             backgroundColor: Colors.grey[300],
                             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
                           ),
@@ -319,16 +319,16 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
 
-                    // -- مهارة UI/UX Design --
+                    // -- مهارة UI Design --
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("UI/UX Design", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          Text("UI Design", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                           SizedBox(height: 4),
                           LinearProgressIndicator(
-                            value: 0.3, // 60%
+                            value: 0.4, // 60%
                             backgroundColor: Colors.grey[300],
                             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
                           ),
@@ -338,7 +338,7 @@ class _ProfileAppState extends State<ProfileApp> {
                   ],
                 ),
               ),
-              // --- نهاية قسم المهارات ---
+
             ],
           ),
         ),
