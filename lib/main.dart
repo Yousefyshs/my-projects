@@ -1,176 +1,127 @@
+
+import 'package:cv/Towpage.dart';
+import 'package:cv/Towpage1.dart';
 import 'package:flutter/material.dart';
+import 'bottombar/Indexpage.dart';
+
+
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  TextEditingController _controller1= TextEditingController();
+  TextEditingController _controller2= TextEditingController();
+  late String controller3;
+  void _login(){
+    setState(() {
+      _controller2.text=_controller1.text;
+    });
+  }
+
+  void _Navgitor1(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=>Towpage1(
+            name: _controller1.text
+
+        )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'المسبحة الإلكترونية',
-        theme: ThemeData(
+      debugShowCheckedModeBanner: false,
 
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-          useMaterial3: true,
-
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Home Page'),
+          backgroundColor: Colors.blueGrey,
         ),
-        home: const  MyHomePage(title: "المسبحة الإلكترونية")
 
-
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _subhanAllahCounter = 0;
-  int _alhamdulillahCounter = 0;
-  int _allahuAkbarCounter = 0;
-
-
-  void _incrementSubhanAllah() {
-    setState(() {
-      if (_subhanAllahCounter >= 33) {
-        _subhanAllahCounter = 0;
-      } else {
-        _subhanAllahCounter++;
-      }
-    });
-  }
-  void _incrementAlhamdulillah() {
-    setState(() {
-      if (_alhamdulillahCounter >= 33) {
-        _alhamdulillahCounter = 0;
-      } else {
-        _alhamdulillahCounter++;
-      }
-    });
-  }
-
-  void _incrementAllahuAkbar() {
-    setState(() {
-      if (_allahuAkbarCounter >= 33) {
-        _allahuAkbarCounter = 0;
-      } else {
-        _allahuAkbarCounter++;
-      }
-    });
-  }
-
-  void _resetAllCounters() {
-    setState(() {
-      _subhanAllahCounter = 0;
-      _alhamdulillahCounter = 0;
-      _allahuAkbarCounter = 0;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-
-        title: const Text("المسبحة الإلكترونية"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-
-        child:Padding(
-
-
-
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-
-
-
-              const SizedBox(height: 5), // إضافة مسافة علوية لتحسين التوسيط البصري عند التمرير
-              _buildTasbihCard(
-                title: "سبحان الله",
-                counter: _subhanAllahCounter,
-                onPressed: _incrementSubhanAllah,
-              ),
-              const SizedBox(height: 10),
-              _buildTasbihCard(
-                title: " الحمد لله كثيرا",
-                counter: _alhamdulillahCounter,
-                onPressed: _incrementAlhamdulillah,
-              ),
-              const SizedBox(height: 10),ColoredBox(color: Colors.green),
-              _buildTasbihCard(
-
-                title: "الله أكبر",
-                counter: _allahuAkbarCounter,
-                onPressed: _incrementAllahuAkbar,
-              ),
-              const SizedBox(height:10)
-            ],
-          ),
-        ),
-      ),
-
-
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _resetAllCounters,
-        tooltip: 'تصفير الكل',
-        child: const Icon(Icons.refresh),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  Widget _buildTasbihCard({required String title, required int counter, required VoidCallback onPressed}) {
-    return Card(
-
-
-      elevation: 4.0,
-      child: Padding(
-
-
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-        child: Column(
-
+        body: Column(
           children: [
+            SizedBox(height: 20),
 
-            Text(
-              title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87 ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Enter the Name',
+                hintText: 'ahmed',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              controller: _controller1,
             ),
-            const SizedBox(height: 5),
+
+            SizedBox(height: 20),
+
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'the Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              controller: _controller2,
+              readOnly: true,
+            ),
 
             ElevatedButton(
-              onPressed: onPressed,
-
+              onPressed: _login,
+              child: Text('Submit'),
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60 ),
-
-                textStyle: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                backgroundColor: Colors.blueGrey,
               ),
-              child: Text('$counter'),
             ),
+
+            const SizedBox(height: 30),
+
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              ),
+              onPressed: () {
+                // عند الضغط على الزر
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    // الانتقال إلى الصفحة الثانية
+                    // وإرسال النص الذي تم كتابته عبر المتغير `name`
+                    builder: (context) => Towpage(
+                      name: _controller1.text,
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Send to Second Page'),
+            ),
+
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                ),
+                onPressed: (){
+                  _Navgitor1();
+                },
+                child: Text('Navgitor1')),
+
+
+
           ],
         ),
       ),
     );
   }
-
 }
+
