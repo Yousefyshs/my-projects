@@ -1,124 +1,119 @@
-
-import 'package:cv/Towpage.dart';
-import 'package:cv/Towpage1.dart';
 import 'package:flutter/material.dart';
-import 'bottombar/Indexpage.dart';
-
-
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyUIExample());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  TextEditingController _controller1= TextEditingController();
-  TextEditingController _controller2= TextEditingController();
-  late String controller3;
-  void _login(){
-    setState(() {
-      _controller2.text=_controller1.text;
-    });
-  }
-
-  void _Navgitor1(){
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context)=>Towpage1(
-            name: _controller1.text
-
-        )));
-  }
+class MyUIExample extends StatelessWidget {
+  const MyUIExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
+}
 
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Home Page'),
-          backgroundColor: Colors.blueGrey,
-        ),
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-        body: Column(
+  final TextEditingController controller1 = TextEditingController();
+  final TextEditingController controller2 = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xfff7f1f7), // نفس لون الخلفية في الصورة
+      appBar: AppBar(
+        backgroundColor: Color(0xff58727f), // اللون الأزرق الرمادي
+        elevation: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 20),
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Enter the Name',
-                hintText: 'ahmed',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              controller: _controller1,
+            Text(
+              "Home Page",
+              style: TextStyle(fontSize: 22),
             ),
-
-            SizedBox(height: 20),
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'the Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              controller: _controller2,
-              readOnly: true,
-            ),
-
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Submit'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueGrey,
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueGrey,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              ),
-              onPressed: () {
-                // عند الضغط على الزر
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    // الانتقال إلى الصفحة الثانية
-                    // وإرسال النص الذي تم كتابته عبر المتغير `name`
-                    builder: (context) => Towpage(
-                      name: _controller1.text,
-                    ),
-                  ),
-                );
-              },
-              child: const Text('Send to Second Page'),
-            ),
-
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
-                ),
-                onPressed: (){
-                  _Navgitor1();
-                },
-                child: Text('Navgitor1')),
-
-
-
+            Icon(Icons.arrow_forward),
           ],
+        ),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+        child: Column(
+          children: [
+
+            //-------------- INPUT 1 -------------------
+            TextField(
+              controller: controller1,
+              decoration: InputDecoration(
+                labelText: "Enter the Name",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            //-------------- INPUT 2 -------------------
+            TextField(
+              controller: controller2,
+              readOnly: true,
+              decoration: InputDecoration(
+                labelText: "the Name",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 30),
+
+            //-------------- BUTTONS -------------------
+            Column(
+              children: [
+                _myButton("Submit", () {
+                  controller2.text = controller1.text;
+                }),
+
+                SizedBox(height: 10),
+
+                _myButton("Navigator", () {}),
+
+                SizedBox(height: 10),
+
+                _myButton("Navigator1", () {}),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  //-------------- CUSTOM BUTTON STYLE -------------------
+  Widget _myButton(String text, VoidCallback onPressed) {
+    return Container(
+      width: 140,
+      height: 38,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xff58727f),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.white.withOpacity(0.7),
+          ),
         ),
       ),
     );
