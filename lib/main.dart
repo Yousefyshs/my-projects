@@ -1,10 +1,8 @@
-
-import 'package:cv/Towpage.dart';
-import 'package:cv/Towpage1.dart';
+import 'package:cv/bottombar/Accountpage.dart';
+import 'package:cv/bottombar/Homepage.dart';
+import 'package:cv/bottombar/Searchpage.dart';
+import 'package:cv/bottombar/Settingpage.dart';
 import 'package:flutter/material.dart';
-import 'bottombar/Indexpage.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -18,23 +16,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TextEditingController _controller1= TextEditingController();
-  TextEditingController _controller2= TextEditingController();
-  late String controller3;
-  void _login(){
-    setState(() {
-      _controller2.text=_controller1.text;
-    });
-  }
+  int _currentIndex = 0; // المؤشر للصفحة الحالية
 
-  void _Navgitor1(){
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context)=>Towpage1(
-            name: _controller1.text
+  // الصفحات الأربعة
+  final List<Widget> pages = [
+    HomePage(),
+    SearchPage(),
+    SettingsPage(),
 
-        )));
-  }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,85 +33,41 @@ class _MyAppState extends State<MyApp> {
 
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Home Page'),
+          title: Text("Bottom Nav App"),
           backgroundColor: Colors.blueGrey,
         ),
 
-        body: Column(
-          children: [
-            SizedBox(height: 20),
+        body: pages[_currentIndex],
 
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Enter the Name',
-                hintText: 'ahmed',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              controller: _controller1,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.orange,
+          unselectedItemColor: Colors.blue,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
             ),
-
-            SizedBox(height: 20),
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'the Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              controller: _controller2,
-              readOnly: true,
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: "Search",
             ),
-
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Submit'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueGrey,
-              ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "Settings",
             ),
-
-            const SizedBox(height: 30),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueGrey,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              ),
-              onPressed: () {
-                // عند الضغط على الزر
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    // الانتقال إلى الصفحة الثانية
-                    // وإرسال النص الذي تم كتابته عبر المتغير `name`
-                    builder: (context) => Towpage(
-                      name: _controller1.text,
-                    ),
-                  ),
-                );
-              },
-              child: const Text('Send to Second Page'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Account",
             ),
-
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
-                ),
-                onPressed: (){
-                  _Navgitor1();
-                },
-                child: Text('Navgitor1')),
-
-
-
           ],
         ),
       ),
     );
   }
 }
-
